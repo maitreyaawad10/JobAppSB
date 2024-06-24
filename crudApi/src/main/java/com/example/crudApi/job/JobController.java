@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/jobs")
 public class JobController {
     private JobService jobService;
 
@@ -15,21 +16,21 @@ public class JobController {
     }
 
     // CREATE A JOB
-    @PostMapping("/api/jobs")
+    @PostMapping
     public ResponseEntity<String> createJob(@RequestBody Job job) {
         jobService.createJob(job);
         return new ResponseEntity<>("Job created successfully.", HttpStatus.CREATED);
     }
 
     // GET ALL JOBS
-    @GetMapping("/api/jobs")
+    @GetMapping
     public ResponseEntity<List<Job>> findAll() {
         List<Job> jobs = jobService.findAll();
         return new ResponseEntity<>(jobs, HttpStatus.OK);
     }
 
     // GET JOB BY ID
-    @GetMapping("/api/jobs/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Job> getJobById(@PathVariable Long id) {
         Job job = jobService.getJobById(id);
         if (job != null)
@@ -38,7 +39,7 @@ public class JobController {
     }
 
     // UPDATE JOB BY ID
-    @PutMapping("/api/jobs/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> updateJobById(@PathVariable Long id, @RequestBody Job updatedJob) {
         boolean updated = jobService.updateJobById(id, updatedJob);
         if (updated)
@@ -47,7 +48,7 @@ public class JobController {
     }
 
     // DELETE JOB BY ID
-    @DeleteMapping("/api/jobs/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteJobById(@PathVariable Long id) {
         boolean deleted = jobService.deleteJobById(id);
         if (deleted)
